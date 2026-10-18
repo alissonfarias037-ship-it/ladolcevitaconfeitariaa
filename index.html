@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>La Dolce Vita — Confeitaria Artesanal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #fdf8f2;
+            --bg-card: #ffffff;
+            --rose-primary: #d96b70;
+            --rose-dark: #b84f54;
+            --rose-soft: #fce8e9;
+            --cocoa: #4a332d;
+            --cocoa-light: #7c625a;
+            --gold-border: #e6d3c1;
+        }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--cocoa);
+        }
+        .font-serif-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+        .card-shadow {
+            box-shadow: 0 8px 24px -4px rgba(74, 51, 45, 0.07), 0 2px 8px -2px rgba(74, 51, 45, 0.04);
+        }
+        .card-shadow:hover {
+            box-shadow: 0 18px 32px -6px rgba(217, 107, 112, 0.16), 0 6px 14px -4px rgba(74, 51, 45, 0.06);
+        }
+        .edit-pulse {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(217, 107, 112, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(217, 107, 112, 0); }
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f8efe6; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #d5b8a3; border-radius: 9999px; }
+
+        /* Animação de Entrada: Logo Girando e Sumindo */
+        #splashLoader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: radial-gradient(circle at center, #fffdf9 0%, #f7eadc 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out;
+        }
+        #splashLoader.splash-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .splash-logo-spin {
+            animation: logoSpinAndVanish 2.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .splash-ring {
+            animation: pulseRing 1.8s ease-out infinite;
+        }
+        @keyframes logoSpinAndVanish {
+            0% {
+                transform: scale(0.4) rotate(-180deg);
+                opacity: 0;
+            }
+            35% {
+                transform: scale(1.06) rotate(0deg);
+                opacity: 1;
+            }
+            65% {
+                transform: scale(1) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.35) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(0.85); opacity: 0.7; }
+            100% { transform: scale(1.45); opacity: 0; }
+        }
+        #siteMainWrapper {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        #siteMainWrapper.site-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col pb-20 sm:pb-0 selection:bg-[#d96b70] selection:text-white">
+
+    <!-- TELA DE ABERTURA (SPLASH SCREEN COM A LOGO GIRANDO E SUMINDO) -->
+    <div id="splashLoader">
+        <div class="relative flex items-center justify-center">
+            <div class="splash-ring absolute w-44 h-44 sm:w-56 sm:h-56 rounded-full border-2 border-[#d96b70]/40"></div>
+            <div class="splash-logo-spin relative w-36 h-36 sm:w-48 sm:h-48 rounded-full p-1.5 bg-white shadow-2xl border-2 border-[#d96b70]">
+                <img src="/logo.jpg" onerror="this.src='https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=300&q=80'" alt="La Dolce Vita" class="w-full h-full rounded-full object-cover">
+            </div>
+        </div>
+        <p class="font-script text-3xl sm:text-4xl text-[#8c584c] mt-5 animate-pulse">La Dolce Vita</p>
+        <span class="text-[10px] sm:text-xs uppercase tracking-[0.28em] text-[#9c7a6b] font-semibold mt-1">Confeitaria Artesanal</span>
+    </div>
+
+    <div id="siteMainWrapper" class="min-h-screen flex flex-col flex-1">
+
+    <!-- BARRA DE COMANDOS DE EDIÇÃO (OCULTA PARA CLIENTES — SÓ APARECE QUANDO UM E-MAIL ADMIN FAZ LOGIN) -->
+    <div id="adminToolbar" class="hidden sticky top-0 z-50 bg-[#36231e] text-[#fdf8f2] border-b border-[#593d35] px-3 sm:px-6 py-2 shadow-md">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#d96b70] text-white shrink-0">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span id="adminUserBadge">Admin</span>
+                    </span>
+                    <span class="text-xs text-[#e6d3c1] truncate hidden xl:inline">
+                        Painel liberado! Clientes normais não veem esta barra.
+                    </span>
+                </div>
+
+                <!-- Botões Principais do Administrador -->
+                <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
+                    <button onclick="publishAndBroadcastNow()" id="btnPublishSite" class="px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-[#d96b70] hover:bg-[#c2565b] text-white transition flex items-center gap-1.5 shrink-0 shadow-md" title="Publicar todas as alterações para todos os clientes verem no site">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span id="lblPublishSite">Atualizar Site dos Clientes</span>
+                    </button>
+                    <button onclick="toggleEditMode()" id="btnToggleEdit" class="px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-[#f59e0b] hover:bg-[#d97706] text-stone-950 transition flex items-center gap-1.5 shrink-0 shadow">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span id="lblToggleEdit">Edição Direta</span>
+                    </button>
+                    <button onclick="openNewProductModal()" class="px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1 shrink-0">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Novo Doce</span>
+                    </button>
+                    <button onclick="openAdminsModal()" class="px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-sky-600 hover:bg-sky-500 text-white transition flex items-center gap-1.5 shrink-0" title="Gerenciar E-mails com Acesso Admin">
+                        <i class="fa-solid fa-envelope-circle-check"></i>
+                        <span>E-mails Admin</span>
+                    </button>
+                    <button onclick="openBulkModal()" class="hidden md:flex px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#523831] hover:bg-[#69483f] text-[#fdf8f2] border border-[#7c584e] transition items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-percent"></i> Preços
+                    </button>
+                    <button onclick="openStoreSettingsModal()" class="hidden md:flex px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#523831] hover:bg-[#69483f] text-[#fdf8f2] border border-[#7c584e] transition items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-store"></i> Loja & Banner
+                    </button>
+                    <button onclick="openCommandTerminal()" class="hidden sm:flex px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-700 hover:bg-purple-600 text-white transition items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-terminal"></i> Comandos
+                    </button>
+                    <button onclick="toggleMobileAdminMenu()" class="md:hidden px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-[#523831] text-[#fdf8f2] border border-[#7c584e] shrink-0 flex items-center gap-1">
+                        <i class="fa-solid fa-sliders"></i> <span>Mais</span>
+                    </button>
+                    <button onclick="logoutAdmin()" class="px-2.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-red-600 hover:bg-red-500 text-white transition shrink-0 flex items-center gap-1" title="Sair do Modo Administrador e ver como Cliente">
+                        <i class="fa-solid fa-right-from-bracket"></i> <span class="hidden sm:inline">Sair</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu Expandível para Celular -->
+            <div id="mobileAdminDrawer" class="hidden md:hidden pt-2.5 mt-2 border-t border-[#593d35] grid grid-cols-2 gap-2">
+                <button onclick="publishAndBroadcastNow()" class="col-span-2 px-3 py-2 rounded-lg text-xs font-bold bg-[#d96b70] text-white flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Atualizar Site dos Clientes Agora
+                </button>
+                <button onclick="openStoreSettingsModal()" class="px-3 py-2 rounded-lg text-xs font-semibold bg-[#523831] text-[#fdf8f2] flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-store text-[#f4979c]"></i> Editar Loja / Banner
+                </button>
+                <button onclick="openBulkModal()" class="px-3 py-2 rounded-lg text-xs font-semibold bg-[#523831] text-[#fdf8f2] flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-percent text-[#f4979c]"></i> Reajustar Preços
+                </button>
+                <button onclick="openCommandTerminal()" class="px-3 py-2 rounded-lg text-xs font-semibold bg-purple-700 text-white flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-terminal"></i> Console Comandos
+                </button>
+                <button onclick="resetToDefault()" class="px-3 py-2 rounded-lg text-xs font-semibold bg-red-900/70 text-red-100 flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-rotate-left"></i> Restaurar Padrão
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER PRINCIPAL DA CONFEITARIA -->
+    <header id="mainHeader" class="bg-[#fffcf9]/95 backdrop-blur-md sticky top-0 z-40 border-b border-[#ece0d1] shadow-xs transition-all">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
+            <!-- Logo & Nome -->
+            <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+                <div class="relative group shrink-0">
+                    <img id="headerLogo" src="/logo.jpg" onerror="this.src='https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=200&q=80'" alt="La Dolce Vita Logo" class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-[#d96b70] shadow-md">
+                    <span class="absolute -bottom-0.5 -right-0.5 bg-[#4a332d] text-white text-[9px] sm:text-[10px] w-4 h-4 sm:w-6 sm:h-6 rounded-full flex items-center justify-center shadow">
+                        <i class="fa-solid fa-heart text-[#f4979c]"></i>
+                    </span>
+                </div>
+                <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <h1 id="storeNameDisplay" class="font-script text-2xl sm:text-3xl md:text-4xl text-[#8c584c] leading-none truncate">La Dolce Vita</h1>
+                        <span id="storeStatusPill" class="px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1 shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span> Aberto
+                        </span>
+                    </div>
+                    <p id="storeSubtitleDisplay" class="text-[10px] sm:text-xs tracking-[0.16em] sm:tracking-[0.22em] uppercase text-[#9c7a6b] font-semibold mt-0.5 truncate">CONFEITARIA ARTESANAL</p>
+                </div>
+            </div>
+
+            <!-- Busca Desktop, Botão Cesta e Botão Discreto de Admin -->
+            <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                <div class="relative w-56 lg:w-72 hidden md:block">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a88b7d] text-sm"></i>
+                    <input type="text" id="searchInput" oninput="syncSearch(this.value)" placeholder="Buscar cupcake, bolo, macaron..." class="w-full pl-9 pr-4 py-2 rounded-full bg-[#f7efe6] border border-[#e2d0be] text-sm text-[#4a332d] placeholder-[#a88b7d] focus:outline-none focus:border-[#d96b70]">
+                </div>
+
+                <button onclick="toggleCartDrawer(true)" class="relative flex items-center gap-2 bg-[#d96b70] hover:bg-[#c2565b] text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm shadow-md transition active:scale-95">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="hidden sm:inline">Minha Cesta</span>
+                    <span id="cartCountBadge" class="bg-white text-[#d96b70] font-extrabold text-[11px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full">0</span>
+                </button>
+
+                <!-- Botão Cadeado para Login de Admin -->
+                <button id="btnHeaderAdminLogin" onclick="openAdminLoginModal()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#f5ebe1] hover:bg-[#ead8c7] text-[#6e5046] flex items-center justify-center border border-[#e2cbb5] transition" title="Acesso Restrito Administração">
+                    <i class="fa-solid fa-lock text-xs sm:text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO BANNER ADAPTÁVEL -->
+    <section class="relative overflow-hidden border-b border-[#ead8c7]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 lg:py-14 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+            <!-- Texto do Banner -->
+            <div class="lg:col-span-7 space-y-3.5 sm:space-y-5 text-center lg:text-left order-2 lg:order-1">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fce8e9] border border-[#f5c2c5] text-[#b84f54] text-[11px] sm:text-xs font-bold tracking-wide uppercase">
+                    <i class="fa-solid fa-cake-candles"></i> Receitas Exclusivas & Ingredientes Nobres
+                </div>
+                <h2 id="bannerTitleDisplay" class="font-serif-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#4a332d] leading-[1.15]">
+                    A doçura que encanta os seus melhores momentos
+                </h2>
+                <p id="bannerDescDisplay" class="text-[#7c625a] text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Doces finos, cupcakes artesanais, bolos decorados e tortas feitas todos os dias com chocolate belga, frutas frescas e muito carinho.
+                </p>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-1">
+                    <a href="#cardapioSection" class="px-6 py-3 sm:py-3.5 rounded-full bg-[#4a332d] hover:bg-[#36231e] text-[#fdf8f2] font-semibold text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> Ver Cardápio Completo
+                    </a>
+                    <!-- Este botão só aparece se for Administrador logado -->
+                    <button id="heroBtnNewSweet" onclick="openNewProductModal()" class="hidden px-5 py-3 sm:py-3.5 rounded-full bg-white hover:bg-[#fcf3ea] text-[#4a332d] border border-[#dcc5b0] font-semibold text-xs sm:text-sm shadow-xs transition items-center justify-center gap-2">
+                        <i class="fa-solid fa-camera-rotate text-[#d96b70]"></i> Adicionar / Trocar Foto de Doce
+                    </button>
+                </div>
+
+                <!-- Destaques Rápidos Adaptáveis -->
+                <div class="grid grid-cols-3 gap-2 sm:gap-3 pt-4 border-t border-[#ebd9c8] text-left">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1.5 sm:gap-2.5 bg-white/60 sm:bg-transparent p-2 sm:p-0 rounded-2xl">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#fce8e9] text-[#d96b70] flex items-center justify-center shrink-0 text-xs sm:text-sm"><i class="fa-solid fa-truck-fast"></i></div>
+                        <div>
+                            <p class="text-[11px] sm:text-xs font-bold text-[#4a332d]">Entrega Rápida</p>
+                            <p class="text-[10px] sm:text-[11px] text-[#8c6f64] hidden sm:block">Embalagem térmica</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1.5 sm:gap-2.5 bg-white/60 sm:bg-transparent p-2 sm:p-0 rounded-2xl">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#fce8e9] text-[#d96b70] flex items-center justify-center shrink-0 text-xs sm:text-sm"><i class="fa-solid fa-award"></i></div>
+                        <div>
+                            <p class="text-[11px] sm:text-xs font-bold text-[#4a332d]">100% Artesanal</p>
+                            <p class="text-[10px] sm:text-[11px] text-[#8c6f64] hidden sm:block">Feito fresco hoje</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1.5 sm:gap-2.5 bg-white/60 sm:bg-transparent p-2 sm:p-0 rounded-2xl">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#fce8e9] text-[#d96b70] flex items-center justify-center shrink-0 text-xs sm:text-sm"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div>
+                            <p class="text-[11px] sm:text-xs font-bold text-[#4a332d]">Pedido Fácil</p>
+                            <p class="text-[10px] sm:text-[11px] text-[#8c6f64] hidden sm:block">Direto no WhatsApp</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Moldura com a Logo Oficial e Foto do Banner -->
+            <div class="lg:col-span-5 flex justify-center order-1 lg:order-2">
+                <div class="relative w-full max-w-sm sm:max-w-md">
+                    <div class="rounded-3xl overflow-hidden border-4 border-white shadow-xl relative group">
+                        <img id="bannerImageDisplay" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1000&q=80" alt="Vitrine La Dolce Vita" class="w-full h-52 sm:h-72 md:h-80 lg:h-96 object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#36231e]/75 via-transparent to-transparent"></div>
+                        <!-- Botão trocar banner só visível para Admin -->
+                        <button id="heroBtnChangeBanner" onclick="openStoreSettingsModal()" class="hidden absolute top-3 right-3 bg-white/95 hover:bg-white text-[#4a332d] text-[11px] sm:text-xs font-bold px-3 py-1.5 rounded-full shadow items-center gap-1.5">
+                            <i class="fa-solid fa-image text-[#d96b70]"></i> Trocar Banner
+                        </button>
+                        <div class="absolute bottom-3 left-4 right-24 sm:right-4 text-white">
+                            <span class="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#f9cbd0] font-bold block">Especialidade da Casa</span>
+                            <p class="font-serif-title text-lg sm:text-2xl font-bold leading-tight">Confeitaria Fina & Cupcakes</p>
+                        </div>
+                    </div>
+                    <!-- Selo Redondo da Logo Oficial -->
+                    <div class="absolute -bottom-4 right-3 sm:-bottom-5 sm:-left-5 sm:right-auto bg-[#fdf8f2] p-1 rounded-full shadow-xl border border-[#e2cbb5] w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center">
+                        <img src="/logo.jpg" onerror="this.src='https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=200&q=80'" alt="Selo La Dolce Vita" class="w-full h-full rounded-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAINEL DE AVISO QUANDO O MODO EDIÇÃO ESTÁ ATIVO -->
+    <div id="directEditBanner" class="hidden bg-amber-100 border-b border-amber-300 px-3 sm:px-6 py-2.5 text-amber-950">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+            <div class="flex items-center gap-2 font-semibold">
+                <i class="fa-solid fa-bolt text-amber-600"></i>
+                <span>MODO EDIÇÃO ATIVO: Toque em qualquer doce abaixo para mudar foto, nome ou valor!</span>
+            </div>
+            <button onclick="toggleEditMode()" class="px-3 py-1 rounded-lg bg-amber-900 text-white text-xs font-bold hover:bg-amber-800 shrink-0">
+                Concluir Edição
+            </button>
+        </div>
+    </div>
+
+    <!-- SEÇÃO DO CARDÁPIO E FILTROS -->
+    <main id="cardapioSection" class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-10 flex-1 w-full">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-5 sm:mb-8 gap-3 sm:gap-4">
+            <div>
+                <span class="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#d96b70]">Nosso Cardápio Interativo</span>
+                <h3 class="font-serif-title text-2xl sm:text-3xl md:text-4xl font-bold text-[#4a332d] mt-0.5">Escolha suas Tentações Favoritas</h3>
+            </div>
+
+            <!-- Busca Mobile + Ordenação -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div class="relative md:hidden w-full">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a88b7d] text-xs"></i>
+                    <input type="text" id="searchInputMobile" oninput="syncSearch(this.value)" placeholder="Buscar doce no cardápio..." class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-white border border-[#e2d0be] text-sm">
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="manualClientSync()" id="btnClientSync" class="px-3 py-2.5 rounded-xl bg-white hover:bg-[#f7efe6] border border-[#e2d0be] text-[#4a332d] text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 shrink-0 shadow-xs active:scale-95" title="Recarregar e buscar novidades no cardápio">
+                        <i class="fa-solid fa-arrows-rotate text-[#d96b70]" id="iconClientSync"></i>
+                        <span class="text-xs">Atualizar Cardápio</span>
+                    </button>
+                    <select id="sortSelect" onchange="renderProducts()" class="flex-1 sm:flex-initial px-3 py-2.5 rounded-xl bg-white border border-[#e2d0be] text-xs sm:text-sm font-medium text-[#4a332d] focus:outline-none focus:border-[#d96b70]">
+                        <option value="featured">Destaques Primeiro</option>
+                        <option value="priceAsc">Menor Valor</option>
+                        <option value="priceDesc">Maior Valor</option>
+                        <option value="nameAsc">Ordem Alfabética (A-Z)</option>
+                    </select>
+                    <!-- Botão Categorias só visível para Admin -->
+                    <button id="btnManageCategories" onclick="openCategoryManager()" class="hidden px-3.5 py-2.5 rounded-xl bg-[#f5ebe1] hover:bg-[#ead8c7] text-[#4a332d] text-xs sm:text-sm font-semibold transition items-center gap-1.5 shrink-0">
+                        <i class="fa-solid fa-tags text-[#d96b70]"></i> <span>Categorias</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas de Categorias Deslizáveis -->
+        <div id="categoryTabs" class="flex items-center gap-2 overflow-x-auto pb-2.5 mb-5 sm:mb-8 no-scrollbar"></div>
+
+        <!-- Grade de Produtos Responsiva -->
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"></div>
+    </main>
+
+    <!-- BARRA FIXA INFERIOR DA CESTA NO CELULAR -->
+    <div id="mobileCartBar" class="fixed bottom-0 inset-x-0 z-40 p-3 bg-gradient-to-t from-[#fdf8f2] via-[#fdf8f2] to-transparent sm:hidden hidden">
+        <button onclick="toggleCartDrawer(true)" class="w-full py-3.5 px-5 rounded-2xl bg-[#d96b70] text-white shadow-2xl flex items-center justify-between font-bold text-sm">
+            <div class="flex items-center gap-2.5">
+                <span id="mobileBarCount" class="bg-white text-[#d96b70] px-2.5 py-0.5 rounded-full text-xs font-extrabold">1</span>
+                <span>Ver Minha Cesta</span>
+            </div>
+            <span id="mobileBarTotal" class="font-extrabold">R$ 0,00</span>
+        </button>
+    </div>
+
+    <!-- SEÇÃO SOBRE & INFORMAÇÕES DA CONFEITARIA -->
+    <section class="bg-[#f6ede4] border-t border-[#e6d5c3] py-10 sm:py-12 px-4 sm:px-6 mt-8 sm:mt-12">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center text-center md:text-left">
+            <div class="flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4">
+                <img src="/logo.jpg" onerror="this.src='https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=200&q=80'" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-[#d96b70] shadow-md">
+                <div>
+                    <h4 class="font-script text-3xl text-[#8c584c]">La Dolce Vita</h4>
+                    <p class="text-xs text-[#7c625a] mt-1">Confeitaria artesanal feita com afeto, técnica clássica e ingredientes selecionados.</p>
+                </div>
+            </div>
+            <div class="space-y-1.5 text-xs sm:text-sm text-[#5c423b]">
+                <p class="font-bold text-[#4a332d] uppercase text-xs tracking-wider mb-1">Localização & Horários</p>
+                <p><i class="fa-solid fa-location-dot text-[#d96b70] w-5"></i> <span id="footerAddress">Rua das Flores, 450 - Jardim Europa</span></p>
+                <p><i class="fa-regular fa-clock text-[#d96b70] w-5"></i> <span id="footerHours">Terça a Domingo: 10h às 20h</span></p>
+            </div>
+            <div class="space-y-1.5 text-xs sm:text-sm text-[#5c423b]">
+                <p class="font-bold text-[#4a332d] uppercase text-xs tracking-wider mb-1">WhatsApp de Encomendas</p>
+                <p><i class="fa-brands fa-whatsapp text-emerald-600 w-5"></i> <span id="footerWhatsapp">(81) 98993-6203</span></p>
+                <p><i class="fa-brands fa-instagram text-[#d96b70] w-5"></i> <span id="footerInsta">@ladolcevita.confeitaria</span></p>
+                <p><i class="fa-solid fa-motorcycle text-[#d96b70] w-5"></i> Taxa de Entrega: <strong id="footerDelivery">R$ 8,50</strong></p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-[#e6d5c3] flex flex-col sm:flex-row items-center justify-between text-xs text-[#8c6f64] gap-2">
+            <p>© 2026 La Dolce Vita Confeitaria. Todos os direitos reservados.</p>
+            <button onclick="openAdminLoginModal()" class="hover:text-[#d96b70] flex items-center gap-1.5 font-semibold">
+                <i class="fa-solid fa-user-lock"></i> Área Restrita (Administração)
+            </button>
+        </div>
+    </section>
+
+    <!-- MODAL DE LOGIN DE ADMINISTRADOR POR E-MAIL E SENHA -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 bg-black/65 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-[#fffcf9] border border-[#e2cbb5] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between border-b border-[#eee0d1] pb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-2xl bg-[#fce8e9] text-[#d96b70] flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif-title text-2xl font-bold text-[#4a332d] leading-none">Acesso Administrador</h3>
+                        <p class="text-[11px] text-[#8c6f64] mt-1">Somente e-mails autorizados podem editar os doces</p>
+                    </div>
+                </div>
+                <button onclick="closeAdminLoginModal()" class="w-8 h-8 rounded-full bg-[#f4e8dc] text-[#4a332d]"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Seu E-mail de Administrador *</label>
+                    <input type="email" id="loginAdminEmail" required placeholder="Ex: admin@ladolcevita.com" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#dcc5b0] text-sm focus:outline-none focus:border-[#d96b70]">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Senha de Acesso *</label>
+                    <input type="password" id="loginAdminPass" required placeholder="Digite sua senha..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#dcc5b0] text-sm focus:outline-none focus:border-[#d96b70]">
+                </div>
+                <p id="loginErrorMsg" class="text-xs text-red-600 font-semibold hidden"></p>
+
+                <div class="bg-[#f9f1e8] p-3 rounded-xl border border-[#e6d5c3] text-[11px] text-[#6e5046]">
+                    <p class="font-bold text-[#4a332d] mb-0.5"><i class="fa-solid fa-key text-[#d96b70]"></i> Acesso Inicial de Fábrica:</p>
+                    <p>E-mail: <b>admin@ladolcevita.com</b> | Senha: <b>123</b></p>
+                    <p class="mt-1 text-[10px] text-[#8c6f64]">(Após entrar, clique em <b>"E-mails Admin"</b> no topo para cadastrar o seu próprio e-mail e senha!)</p>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-[#d96b70] hover:bg-[#bf565b] text-white font-bold text-sm shadow-md transition">
+                    Entrar no Modo Administração
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PARA GERENCIAR E-MAILS DE ADMINISTRADORES AUTORIZADOS -->
+    <div id="adminsManagerModal" class="fixed inset-0 z-50 bg-black/65 backdrop-blur-xs hidden items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-[#fffcf9] border-t sm:border border-[#e2cbb5] rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto custom-scroll">
+            <div class="flex items-center justify-between border-b border-[#eee0d1] pb-3">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-[#d96b70]">Controle de Acesso</span>
+                    <h3 class="font-serif-title text-2xl font-bold text-[#4a332d]">E-mails Autorizados na Administração</h3>
+                </div>
+                <button onclick="document.getElementById('adminsManagerModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-[#f4e8dc]"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <p class="text-xs text-[#7c625a]">Adicione abaixo os e-mails que podem fazer login e ver o painel de comandos e edição dos produtos:</p>
+
+            <!-- Lista de Admins Atuais -->
+            <div id="adminsListContainer" class="space-y-2 max-h-52 overflow-y-auto custom-scroll"></div>
+
+            <!-- Formulário para Adicionar Novo E-mail Admin -->
+            <form onsubmit="addNewAdminEmail(event)" class="bg-[#f9f1e8] p-4 rounded-2xl border border-[#e6d5c3] space-y-3">
+                <p class="text-xs font-bold uppercase text-[#4a332d]"><i class="fa-solid fa-user-plus text-[#d96b70] mr-1"></i> Adicionar Novo E-mail Administrador</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <input type="text" id="newAdminName" required placeholder="Nome (ex: Alisson)" class="px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-xs sm:text-sm">
+                    <input type="email" id="newAdminEmail" required placeholder="seuemail@gmail.com" class="px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-xs sm:text-sm">
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="newAdminPass" required placeholder="Crie uma senha para este e-mail" class="flex-1 px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-xs sm:text-sm">
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shrink-0">
+                        + Autorizar E-mail
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL COMPLETO DE EDIÇÃO DE PRODUTO -->
+    <div id="productModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-[#fffcf9] border-t sm:border border-[#e2cbb5] rounded-t-3xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-7 shadow-2xl max-h-[92vh] overflow-y-auto custom-scroll">
+            <div class="flex items-center justify-between pb-3 border-b border-[#eee0d1]">
+                <div>
+                    <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#d96b70]">Editor Completo do Produto</span>
+                    <h3 id="modalTitle" class="font-serif-title text-xl sm:text-3xl font-bold text-[#4a332d]">Editar Doce</h3>
+                </div>
+                <button onclick="closeProductModal()" class="w-9 h-9 rounded-full bg-[#f4e8dc] hover:bg-[#e6d3c1] text-[#4a332d] flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="productForm" onsubmit="saveProductForm(event)" class="space-y-4 mt-4">
+                <input type="hidden" id="prodId">
+
+                <div class="bg-[#f9f1e8] p-3.5 sm:p-4 rounded-2xl border border-[#e6d5c3]">
+                    <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#6e5046] mb-2.5">
+                        <i class="fa-solid fa-camera text-[#d96b70]"></i> Foto do Produto (Envie da Galeria do Celular/PC ou Escolha Abaixo)
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-3.5 items-center">
+                        <img id="prodImagePreview" src="https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=500&q=80" class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover border-2 border-white shadow-md shrink-0 bg-white">
+                        <div class="flex-1 space-y-2.5 w-full">
+                            <input type="text" id="prodImageUrl" oninput="document.getElementById('prodImagePreview').src = this.value" placeholder="Cole o link da foto ou envie do seu aparelho..." class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-xs sm:text-sm">
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <label class="cursor-pointer flex-1 sm:flex-initial justify-center px-3.5 py-2.5 rounded-xl bg-[#d96b70] hover:bg-[#bf565b] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition">
+                                    <i class="fa-solid fa-upload"></i> Escolher Foto do Celular / PC
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(event, 'prodImageUrl', 'prodImagePreview')">
+                                </label>
+                                <button type="button" onclick="useLogoAsProductImage()" class="px-3 py-2.5 rounded-xl bg-[#4a332d] hover:bg-[#36231e] text-white text-xs font-semibold flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-award"></i> Usar Logo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3.5 pt-3 border-t border-[#e8d7c5]">
+                        <p class="text-[11px] font-bold text-[#7c625a] mb-2">Galeria Rápida (Toque em uma foto para substituir imediatamente):</p>
+                        <div class="grid grid-cols-4 sm:grid-cols-8 gap-1.5 sm:gap-2" id="quickPhotoPresets"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Nome do Doce / Produto *</label>
+                        <input type="text" id="prodName" required placeholder="Ex: Cupcake Morango Imperial" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#dcc5b0] text-sm font-semibold text-[#4a332d]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Categoria *</label>
+                        <select id="prodCategory" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#dcc5b0] text-sm font-semibold text-[#4a332d]"></select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-[#6e5046] mb-1">Valor Normal (R$)*</label>
+                        <input type="number" step="0.01" id="prodPrice" required placeholder="15.90" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-sm font-bold text-[#4a332d]">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-[#d96b70] mb-1">Valor Promo (R$)</label>
+                        <input type="number" step="0.01" id="prodPromoPrice" placeholder="Opcional" class="w-full px-3 py-2 rounded-xl bg-white border border-[#f2bac0] text-sm font-bold text-[#d96b70]">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-[#6e5046] mb-1">Peso / Porção</label>
+                        <input type="text" id="prodWeight" placeholder="Ex: 120g" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase text-[#6e5046] mb-1">Estoque</label>
+                        <input type="number" id="prodStock" placeholder="20" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Etiqueta de Destaque</label>
+                        <input type="text" id="prodBadge" placeholder="Ex: Mais Vendido, Novo..." class="w-full px-3.5 py-2 rounded-xl bg-white border border-[#dcc5b0] text-sm">
+                    </div>
+                    <div class="flex items-center gap-4 pt-1 sm:pt-4">
+                        <label class="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-semibold text-[#4a332d]">
+                            <input type="checkbox" id="prodAvailable" checked class="w-4 h-4 accent-[#d96b70]"> Disponível
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-semibold text-[#4a332d]">
+                            <input type="checkbox" id="prodFeatured" class="w-4 h-4 accent-[#d96b70]"> Destacar no Topo
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Descrição Detalhada & Ingredientes</label>
+                    <textarea id="prodDesc" rows="2" placeholder="Descreva os ingredientes, recheio, cobertura..." class="w-full px-3.5 py-2 rounded-xl bg-white border border-[#dcc5b0] text-sm"></textarea>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#eee0d1]">
+                    <button type="button" id="btnDeleteProd" onclick="deleteCurrentProduct()" class="px-3.5 py-2.5 rounded-xl bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold flex items-center gap-1.5">
+                        <i class="fa-solid fa-trash"></i> Excluir
+                    </button>
+                    <div class="flex items-center gap-2 ml-auto">
+                        <button type="button" onclick="closeProductModal()" class="px-4 py-2.5 rounded-xl bg-[#f0e4d7] hover:bg-[#e4d3c1] text-[#4a332d] text-xs font-bold">Cancelar</button>
+                        <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#d96b70] hover:bg-[#c05459] text-white text-xs sm:text-sm font-bold shadow-md flex items-center gap-1.5">
+                            <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIGURAÇÕES DA LOJA & BANNER -->
+    <div id="storeSettingsModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-[#fffcf9] border-t sm:border border-[#e2cbb5] rounded-t-3xl sm:rounded-3xl max-w-xl w-full p-5 sm:p-7 shadow-2xl max-h-[92vh] overflow-y-auto custom-scroll">
+            <div class="flex items-center justify-between pb-3 border-b border-[#eee0d1]">
+                <h3 class="font-serif-title text-xl sm:text-2xl font-bold text-[#4a332d]"><i class="fa-solid fa-store text-[#d96b70] mr-2"></i>Informações da Confeitaria</h3>
+                <button onclick="closeStoreSettingsModal()" class="w-8 h-8 rounded-full bg-[#f4e8dc] text-[#4a332d]"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveStoreSettings(event)" class="space-y-3.5 mt-4 text-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Nome da Confeitaria</label>
+                        <input type="text" id="setStoreName" required class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Subtítulo</label>
+                        <input type="text" id="setStoreSub" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Título Principal do Banner</label>
+                    <input type="text" id="setBannerTitle" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Texto do Banner</label>
+                    <textarea id="setBannerDesc" rows="2" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Foto do Banner (URL ou Upload)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="setBannerImage" class="flex-1 px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                        <label class="cursor-pointer px-3 py-2 rounded-xl bg-[#d96b70] text-white text-xs font-bold flex items-center gap-1 shrink-0">
+                            <i class="fa-solid fa-upload"></i> Upload
+                            <input type="file" accept="image/*" class="hidden" onchange="handleFileUpload(event, 'setBannerImage', null)">
+                        </label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">WhatsApp do Dono (com DDD)</label>
+                        <input type="text" id="setWhatsapp" placeholder="5581989936203" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Taxa de Entrega (R$)</label>
+                        <input type="number" step="0.01" id="setDeliveryFee" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Endereço Físico</label>
+                        <input type="text" id="setAddress" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-[#6e5046] mb-1">Horário de Funcionamento</label>
+                        <input type="text" id="setHours" class="w-full px-3 py-2 rounded-xl bg-white border border-[#dcc5b0]">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between pt-3 border-t border-[#eee0d1]">
+                    <label class="flex items-center gap-2 font-bold text-xs sm:text-sm text-[#4a332d] cursor-pointer">
+                        <input type="checkbox" id="setIsOpen" class="w-4 h-4 accent-emerald-600"> Loja Aberta
+                    </label>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#d96b70] hover:bg-[#bf565b] text-white font-bold shadow">Salvar Loja</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE COMANDOS EM MASSA DE PREÇOS -->
+    <div id="bulkModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-[#fffcf9] border border-[#e2cbb5] rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-[#eee0d1] pb-3">
+                <h3 class="font-serif-title text-2xl font-bold text-[#4a332d]"><i class="fa-solid fa-percent text-[#d96b70] mr-2"></i>Preços em Massa</h3>
+                <button onclick="document.getElementById('bulkModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-[#f4e8dc]"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-xs text-[#7c625a]">Altere o valor de todos os doces de uma só vez:</p>
+            <div class="space-y-2.5">
+                <button onclick="applyBulkPercentage(10)" class="w-full py-3 px-4 rounded-xl bg-[#f5ebe1] hover:bg-[#ead8c7] text-[#4a332d] text-xs font-bold flex items-center justify-between">
+                    <span>Aumentar todos os preços em +10%</span> <i class="fa-solid fa-arrow-trend-up text-emerald-700"></i>
+                </button>
+                <button onclick="applyBulkPercentage(-10)" class="w-full py-3 px-4 rounded-xl bg-[#fce8e9] hover:bg-[#f7d0d3] text-[#b84f54] text-xs font-bold flex items-center justify-between">
+                    <span>Aplicar 10% de Desconto em todos os doces</span> <i class="fa-solid fa-tags"></i>
+                </button>
+                <button onclick="clearAllPromos()" class="w-full py-3 px-4 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-800 text-xs font-bold flex items-center justify-between">
+                    <span>Remover todos os preços promocionais</span> <i class="fa-solid fa-eraser"></i>
+                </button>
+                <button onclick="enableAllStock()" class="w-full py-3 px-4 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-between">
+                    <span>Deixar todos os produtos disponíveis</span> <i class="fa-solid fa-check-double"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE TERMINAL DE COMANDOS RÁPIDOS -->
+    <div id="commandModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-[#231714] text-[#fdf8f2] border border-[#593d35] rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-[#47302a] pb-3">
+                <h3 class="font-bold text-sm sm:text-base flex items-center gap-2 text-[#f4979c]">
+                    <i class="fa-solid fa-terminal"></i> Console de Comandos Rápidos
+                </h3>
+                <button onclick="document.getElementById('commandModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-[#3a2722] text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="text-[11px] sm:text-xs text-[#d6beb5] space-y-1.5 bg-[#19100e] p-3.5 rounded-xl border border-[#3d2924] font-mono">
+                <p class="text-amber-400 font-bold mb-1">// Comandos disponíveis:</p>
+                <p>• <span class="text-emerald-300">/preco 1 18.90</span> (Muda valor do doce #1)</p>
+                <p>• <span class="text-emerald-300">/nome 1 Cupcake Sensação</span> (Muda nome do doce #1)</p>
+                <p>• <span class="text-emerald-300">/foto 1 URL_DA_FOTO</span> (Troca foto do doce #1)</p>
+                <p>• <span class="text-emerald-300">/desconto 15</span> (Dá 15% de desconto na loja)</p>
+                <p>• <span class="text-emerald-300">/esgotar 3</span> (Esgota o doce #3)</p>
+            </div>
+            <form onsubmit="runQuickCommand(event)" class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="cmdInput" placeholder="Ex: /preco 1 16.50" class="flex-1 px-3.5 py-2.5 rounded-xl bg-[#140c0a] border border-[#593d35] text-sm text-white font-mono focus:outline-none focus:border-[#d96b70]">
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#d96b70] hover:bg-[#c2565b] text-white text-xs font-bold uppercase">Executar</button>
+            </form>
+            <p id="cmdFeedback" class="text-xs text-emerald-400 font-mono min-h-[18px]"></p>
+        </div>
+    </div>
+
+    <!-- MODAL DE GERENCIAR CATEGORIAS -->
+    <div id="categoryModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-[#fffcf9] border border-[#e2cbb5] rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-[#eee0d1] pb-3">
+                <h3 class="font-serif-title text-2xl font-bold text-[#4a332d]">Categorias do Cardápio</h3>
+                <button onclick="document.getElementById('categoryModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-[#f4e8dc]"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="categoryListManager" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            <form onsubmit="addCategory(event)" class="flex gap-2 pt-2">
+                <input type="text" id="newCatInput" required placeholder="Nova categoria..." class="flex-1 px-3 py-2 rounded-xl bg-white border border-[#dcc5b0] text-sm">
+                <button type="submit" class="px-4 py-2 rounded-xl bg-[#4a332d] text-white text-xs font-bold">Adicionar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- GAVETA DO CARRINHO / CESTA DE COMPRAS COMPACTA (SEM ESPAÇO GIGANTE EM BRANCO) -->
+    <div id="cartDrawer" onclick="if(event.target === this) toggleCartDrawer(false)" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs hidden items-start justify-end p-2 sm:p-4">
+        <div class="bg-[#fffcf9] w-full max-w-md max-h-[88vh] flex flex-col rounded-3xl shadow-2xl border border-[#e6d5c3] overflow-hidden mt-10 sm:mt-12">
+            <div class="px-4 py-3.5 border-b border-[#eee0d1] flex items-center justify-between bg-[#f9f1e8] shrink-0">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-[#d96b70] text-base"></i>
+                    <h3 class="font-serif-title text-xl sm:text-2xl font-bold text-[#4a332d]">Sua Cesta de Doces</h3>
+                </div>
+                <button onclick="toggleCartDrawer(false)" class="w-8 h-8 rounded-full bg-white hover:bg-[#f4e8dc] text-[#4a332d] shadow-xs flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="cartItemsList" class="overflow-y-auto p-3.5 sm:p-4 space-y-2.5 max-h-[38vh] custom-scroll"></div>
+
+            <div class="p-4 border-t border-[#eee0d1] bg-[#f9f1e8] space-y-2.5 shrink-0">
+                <div class="space-y-1 text-xs sm:text-sm">
+                    <div class="flex justify-between text-[#7c625a]"><span>Subtotal</span><span id="cartSubtotal">R$ 0,00</span></div>
+                    <div class="flex justify-between text-[#7c625a]"><span>Taxa de Entrega</span><span id="cartDelivery">R$ 8,50</span></div>
+                    <div class="flex justify-between text-sm sm:text-base font-bold text-[#4a332d] pt-1 border-t border-[#e4d3c1]"><span>Total do Pedido</span><span id="cartTotal">R$ 0,00</span></div>
+                </div>
+
+                <!-- Seleção da Forma de Pagamento -->
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-[#6e5046] mb-1.5">Forma de Pagamento *</label>
+                    <input type="hidden" id="selectedPaymentMethod" value="PIX">
+                    <div class="grid grid-cols-2 gap-1.5" id="paymentMethodButtons">
+                        <button type="button" onclick="selectPaymentMethod('PIX', this)" class="pay-btn active-pay px-2.5 py-2 rounded-xl border border-[#d96b70] bg-[#d96b70] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
+                            <i class="fa-brands fa-pix"></i> PIX
+                        </button>
+                        <button type="button" onclick="selectPaymentMethod('Cartão de Crédito', this)" class="pay-btn px-2.5 py-2 rounded-xl border border-[#dcc5b0] bg-white text-[#4a332d] text-xs font-semibold flex items-center justify-center gap-1.5 transition hover:bg-[#fcf3ea]">
+                            <i class="fa-solid fa-credit-card text-[#d96b70]"></i> Crédito
+                        </button>
+                        <button type="button" onclick="selectPaymentMethod('Cartão de Débito', this)" class="pay-btn px-2.5 py-2 rounded-xl border border-[#dcc5b0] bg-white text-[#4a332d] text-xs font-semibold flex items-center justify-center gap-1.5 transition hover:bg-[#fcf3ea]">
+                            <i class="fa-regular fa-credit-card text-[#d96b70]"></i> Débito
+                        </button>
+                        <button type="button" onclick="selectPaymentMethod('Dinheiro / Espécie', this)" class="pay-btn px-2.5 py-2 rounded-xl border border-[#dcc5b0] bg-white text-[#4a332d] text-xs font-semibold flex items-center justify-center gap-1.5 transition hover:bg-[#fcf3ea]">
+                            <i class="fa-solid fa-money-bill-wave text-emerald-600"></i> Dinheiro
+                        </button>
+                    </div>
+                </div>
+
+                <input type="text" id="customerName" placeholder="Seu Nome Completo" class="w-full px-3.5 py-2 rounded-xl bg-white border border-[#dcc5b0] text-xs sm:text-sm">
+                <input type="text" id="customerAddress" placeholder="Endereço de Entrega (ou Retirada)" class="w-full px-3.5 py-2 rounded-xl bg-white border border-[#dcc5b0] text-xs sm:text-sm">
+                <button onclick="checkoutWhatsApp()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-lg flex items-center justify-center gap-2 transition active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-base"></i> Enviar Pedido para (81) 98993-6203
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICAÇÃO -->
+    <div id="toast" class="fixed bottom-20 sm:bottom-5 right-4 sm:right-5 left-4 sm:left-auto z-50 bg-[#36231e] text-white px-4 py-3 rounded-2xl shadow-xl border border-[#d96b70] flex items-center justify-center sm:justify-start gap-2.5 text-xs sm:text-sm font-medium opacity-0 pointer-events-none transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-[#f4979c]"></i>
+        <span id="toastMsg">Alteração salva com sucesso!</span>
+    </div>
+
+    <script>
+        const CLOUD_KV_APP = "r2dncc7r";
+        const CLOUD_KV_KEY = "ladolcevita_cloud_ptr";
+
+        const BUILTIN_STORE_DATA = {
+            updatedAt: 1792364500000,
+            settings: {
+                storeName: "La Dolce Vita",
+                storeSubtitle: "Confeitaria Artesanal",
+                bannerTitle: "A doçura que encanta os seus melhores momentos",
+                bannerDesc: "Doces finos, cupcakes artesanais, bolos decorados e tortas feitas com ingredientes selecionados e muito amor.",
+                bannerImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=80",
+                whatsapp: "5581989936203",
+                instagram: "@ladolcevita.confeitaria",
+                address: "Rua Alto da Bela Vista, 70",
+                openingHours: "Terça a Domingo: 10h às 20h",
+                deliveryFee: 8.50,
+                freeDeliveryAbove: 100.00,
+                isOpen: true,
+                accentColor: "#d96b70"
+            },
+            admins: [
+                { name: "Mileyde Caroline", email: "mileydecarollayne17@gmail.com", password: "Mileyde2026" },
+                { name: "Mileyde Caroline", email: "mileydecarollayne13@gmail.com", password: "Mileyde2026" },
+                { name: "Alisson Silva", email: "alissonfarias037@gmail.com", password: "Alisson2026" },
+                { name: "Administrador Principal", email: "admin@ladolcevita.com", password: "123" }
+            ],
+            categories: ["Todos", "Cupcakes", "Bolos & Tortas", "Doces Finos", "Macarons & Cookies", "Bebidas"],
+            products: [
+                {
+                    id: 1,
+                    name: "Cupcake Amor Perfeito (Morango & Chantilly)",
+                    category: "Cupcakes",
+                    price: 14.90,
+                    promoPrice: 12.50,
+                    description: "Massa fofinha de baunilha com fava real, recheio cremoso de geleia artesanal de morango e cobertura de buttercream rosê com coração.",
+                    image: "https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=700&q=80",
+                    badge: "Mais Vendido",
+                    available: true,
+                    featured: true,
+                    stock: 25,
+                    weight: "110g"
+                },
+                {
+                    id: 2,
+                    name: "Cupcake Red Velvet Imperial",
+                    category: "Cupcakes",
+                    price: 15.90,
+                    promoPrice: null,
+                    description: "O clássico veludo vermelho com leve toque de cacau, recheado e coberto com autêntico frosting de cream cheese philadelphia.",
+                    image: "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&fit=crop&w=700&q=80",
+                    badge: "Especial",
+                    available: true,
+                    featured: true,
+                    stock: 18,
+                    weight: "115g"
+                },
+                {
+                    id: 3,
+                    name: "Fatia de Bolo Chocolatudo Belga",
+                    category: "Bolos & Tortas",
+                    price: 24.00,
+                    promoPrice: 19.90,
+                    description: "Três camadas de massa úmida de cacau 70% intercaladas com brigadeiro gourmet de chocolate belga Callebaut e ganache meio amargo.",
+                    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80",
+                    badge: "Promoção",
+                    available: true,
+                    featured: true,
+                    stock: 12,
+                    weight: "220g"
+                },
+                {
+                    id: 4,
+                    name: "Caixa 6 Macarons Parisienses",
+                    category: "Macarons & Cookies",
+                    price: 42.00,
+                    promoPrice: null,
+                    description: "Seleção de macarons crocantes por fora e macios por dentro: Pistache, Framboesa, Baunilha, Caramelo Salgado, Limão Siciliano e Chocolate.",
+                    image: "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=700&q=80",
+                    badge: "Importado",
+                    available: true,
+                    featured: false,
+                    stock: 10,
+                    weight: "150g"
+                },
+                {
+                    id: 5,
+                    name: "Torta de Frutas Vermelhas & Creme Pâtissier",
+                    category: "Bolos & Tortas",
+                    price: 26.50,
+                    promoPrice: null,
+                    description: "Base crocante de pâte sucrée amanteigada, recheada com creme confeiteiro de baunilha e coroada com morangos, mirtilos e amoras frescas.",
+                    image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=80",
+                    badge: "Fresco Hoje",
+                    available: true,
+                    featured: true,
+                    stock: 8,
+                    weight: "180g"
+                },
+                {
+                    id: 6,
+                    name: "Kit 12 Brigadeiros Gourmet Sortidos",
+                    category: "Doces Finos",
+                    price: 38.90,
+                    promoPrice: 34.90,
+                    description: "Brigadeiros feitos com leite condensado selecionado e chocolate nobre: Ao Leite, Ninho com Nutella, Pistache, Churros e Brûlée.",
+                    image: "https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=700&q=80",
+                    badge: "Presenteável",
+                    available: true,
+                    featured: false,
+                    stock: 30,
+                    weight: "240g"
+                },
+                {
+                    id: 7,
+                    name: "Cheesecake New York com Calda de Amora",
+                    category: "Bolos & Tortas",
+                    price: 25.00,
+                    promoPrice: null,
+                    description: "Cheesecake assado super cremoso sobre base de biscoito amanteigado, finalizado com compota rústica de amoras silvestres.",
+                    image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=700&q=80",
+                    badge: "",
+                    available: true,
+                    featured: false,
+                    stock: 15,
+                    weight: "190g"
+                },
+                {
+                    id: 8,
+                    name: "Cookie New York Duplo Chocolate & Nozes",
+                    category: "Macarons & Cookies",
+                    price: 16.00,
+                    promoPrice: 13.50,
+                    description: "Cookie gigante de 130g estilo nova-iorquino, casquinha dourada e interior super macio derretendo gotas de chocolate meio amargo.",
+                    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=700&q=80",
+                    badge: "Quentinho",
+                    available: true,
+                    featured: false,
+                    stock: 20,
+                    weight: "130g"
+                }
+            ]
+        };
+
+        let storeData = JSON.parse(JSON.stringify(BUILTIN_STORE_DATA));
+        let activeCategory = "Todos";
+        let editMode = false;
+        let currentAdmin = null;
+        let cart = [];
+        let currentSearch = "";
+
+        const sweetGalleryPresets = [
+            { label: "Cupcake Rosa", url: "https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=700&q=80" },
+            { label: "Red Velvet", url: "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&fit=crop&w=700&q=80" },
+            { label: "Bolo Choc", url: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80" },
+            { label: "Macarons", url: "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=700&q=80" },
+            { label: "Torta Frutas", url: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=80" },
+            { label: "Brigadeiros", url: "https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=700&q=80" },
+            { label: "Cheesecake", url: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=700&q=80" },
+            { label: "Cookies", url: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=700&q=80" },
+            { label: "Croissant", url: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=700&q=80" },
+            { label: "Bolo Morango", url: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=80" },
+            { label: "Donuts", url: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=700&q=80" },
+            { label: "Brownie", url: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=80" },
+            { label: "Tiramisu", url: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=700&q=80" },
+            { label: "Cupcake Choc", url: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=700&q=80" },
+            { label: "Mil Folhas", url: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" },
+            { label: "Logo Oficial", url: "/logo.jpg" }
+        ];
+
+        function formatBRL(val) {
+            return Number(val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function isAdmin() {
+            return !!currentAdmin;
+        }
+
+        function toggleMobileAdminMenu() {
+            const d = document.getElementById('mobileAdminDrawer');
+            d.classList.toggle('hidden');
+        }
+
+        function syncSearch(val) {
+            currentSearch = val;
+            const dInput = document.getElementById('searchInput');
+            const mInput = document.getElementById('searchInputMobile');
+            if (dInput && dInput.value !== val) dInput.value = val;
+            if (mInput && mInput.value !== val) mInput.value = val;
+            renderProducts();
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 3200);
+        }
+
+        let currentCloudPointer = null;
+        let lastCloudCheckTime = 0;
+
+        async function fetchCloudStoreData(forceCheck = false) {
+            const now = Date.now();
+            if (!forceCheck && now - lastCloudCheckTime < 5000) return null;
+            lastCloudCheckTime = now;
+            try {
+                const ptrRes = await fetch(`https://keyvalue.immanuel.co/api/KeyVal/GetValue/${CLOUD_KV_APP}/${CLOUD_KV_KEY}?t=${now}`, { cache: 'no-store' });
+                if (!ptrRes.ok) return null;
+                const binKey = (await ptrRes.text()).replace(/["\s]/g, '').trim();
+                if (!binKey || binKey === 'null' || binKey.length < 5) return null;
+                if (!forceCheck && binKey === currentCloudPointer) {
+                    return null; // O cardápio na nuvem não mudou, evita requisições desnecessárias
+                }
+                const binRes = await fetch(`https://bytebin.lucko.me/${binKey}?t=${now}`, { cache: 'no-store' });
+                if (binRes.ok) {
+                    const cloudData = await binRes.json();
+                    if (cloudData && Array.isArray(cloudData.products) && cloudData.products.length > 0) {
+                        currentCloudPointer = binKey;
+                        return cloudData;
+                    }
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        async function pushCloudStoreData(dataToPush) {
+            try {
+                const postRes = await fetch('https://bytebin.lucko.me/post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataToPush)
+                });
+                if (postRes.ok) {
+                    const postJson = await postRes.json();
+                    if (postJson && postJson.key) {
+                        const newKey = postJson.key;
+                        await fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${CLOUD_KV_APP}/${CLOUD_KV_KEY}/${newKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: ''
+                        });
+                        currentCloudPointer = newKey;
+                        return true;
+                    }
+                }
+            } catch (e) {}
+            return false;
+        }
+
+        async function loadStoreData() {
+            // Renderiza imediatamente os produtos embutidos para NUNCA ficar vazio em nenhum e-mail/navegador!
+            renderAll();
+            renderGalleryPresets();
+
+            let loaded = null;
+
+            // 1. Tenta carregar do servidor local Node.js (/api/data)
+            try {
+                const res = await fetch('/api/data?t=' + Date.now(), { cache: 'no-store' });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && Array.isArray(data.products) && data.products.length > 0) {
+                        loaded = data;
+                    }
+                }
+            } catch (e) {}
+
+            // 2. Se estiver no Netlify (sem servidor Node), tenta carregar da Nuvem compartilhada (Cloud Sync)
+            if (!loaded) {
+                const cloudData = await fetchCloudStoreData(true);
+                if (cloudData) loaded = cloudData;
+            }
+
+            // 3. Se ainda não tiver na nuvem, tenta ler o arquivo estático ./store_data.json do Netlify
+            if (!loaded) {
+                try {
+                    const staticRes = await fetch('./store_data.json?t=' + Date.now(), { cache: 'no-store' });
+                    if (staticRes.ok) {
+                        const staticData = await staticRes.json();
+                        if (staticData && Array.isArray(staticData.products) && staticData.products.length > 0) {
+                            loaded = staticData;
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // 4. Verifica se há cache local mais recente neste navegador
+            try {
+                const cachedRaw = localStorage.getItem('ladolcevita_backup');
+                if (cachedRaw) {
+                    const cached = JSON.parse(cachedRaw);
+                    if (cached && Array.isArray(cached.products) && cached.products.length > 0) {
+                        if (!loaded || (cached.updatedAt && cached.updatedAt > (loaded.updatedAt || 0))) {
+                            loaded = cached;
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            if (loaded && Array.isArray(loaded.products) && loaded.products.length > 0) {
+                storeData = loaded;
+            } else {
+                storeData = JSON.parse(JSON.stringify(BUILTIN_STORE_DATA));
+            }
+
+            if (!storeData.settings) storeData.settings = BUILTIN_STORE_DATA.settings;
+            storeData.settings.whatsapp = "5581989936203";
+            if (!storeData.admins || storeData.admins.length === 0) {
+                storeData.admins = BUILTIN_STORE_DATA.admins;
+            }
+
+            const savedAdmin = localStorage.getItem('ladolcevita_logged_admin');
+            if (savedAdmin) {
+                try {
+                    const parsed = JSON.parse(savedAdmin);
+                    const stillValid = storeData.admins.find(a => a.email.toLowerCase() === parsed.email.toLowerCase());
+                    if (stillValid) currentAdmin = stillValid;
+                } catch (err) {}
+            }
+
+            if (storeData.updatedAt) lastKnownTimestamp = storeData.updatedAt;
+            updateAdminUI();
+            renderAll();
+            renderGalleryPresets();
+            initRealtimeSync();
+        }
+
+        function updateAdminUI() {
+            const toolbar = document.getElementById('adminToolbar');
+            const mainHeader = document.getElementById('mainHeader');
+            const heroBtnNew = document.getElementById('heroBtnNewSweet');
+            const heroBtnBanner = document.getElementById('heroBtnChangeBanner');
+            const btnCats = document.getElementById('btnManageCategories');
+            const btnLock = document.getElementById('btnHeaderAdminLogin');
+
+            if (isAdmin()) {
+                toolbar.classList.remove('hidden');
+                mainHeader.classList.remove('top-0');
+                mainHeader.classList.add('top-[45px]');
+                document.getElementById('adminUserBadge').textContent = currentAdmin.name || currentAdmin.email;
+                heroBtnNew.classList.remove('hidden');
+                heroBtnNew.classList.add('flex');
+                heroBtnBanner.classList.remove('hidden');
+                heroBtnBanner.classList.add('flex');
+                btnCats.classList.remove('hidden');
+                btnCats.classList.add('flex');
+                btnLock.innerHTML = `<i class="fa-solid fa-user-check text-emerald-700 text-xs sm:text-sm"></i>`;
+                btnLock.title = `Logado como ${currentAdmin.email}`;
+            } else {
+                editMode = false;
+                toolbar.classList.add('hidden');
+                document.getElementById('directEditBanner').classList.add('hidden');
+                mainHeader.classList.remove('top-[45px]');
+                mainHeader.classList.add('top-0');
+                heroBtnNew.classList.add('hidden');
+                heroBtnNew.classList.remove('flex');
+                heroBtnBanner.classList.add('hidden');
+                heroBtnBanner.classList.remove('flex');
+                btnCats.classList.add('hidden');
+                btnCats.classList.remove('flex');
+                btnLock.innerHTML = `<i class="fa-solid fa-lock text-xs sm:text-sm"></i>`;
+                btnLock.title = "Acesso Restrito Administração";
+            }
+            renderProducts();
+        }
+
+        function openAdminLoginModal() {
+            if (isAdmin()) {
+                openAdminsModal();
+                return;
+            }
+            document.getElementById('loginErrorMsg').classList.add('hidden');
+            const m = document.getElementById('adminLoginModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+            document.getElementById('loginAdminEmail').focus();
+        }
+
+        function closeAdminLoginModal() {
+            const m = document.getElementById('adminLoginModal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginAdminEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('loginAdminPass').value.trim();
+            const errEl = document.getElementById('loginErrorMsg');
+
+            const found = (storeData.admins || []).find(
+                a => a.email.toLowerCase() === email && a.password === pass
+            );
+
+            if (!found) {
+                errEl.textContent = "E-mail não autorizado ou senha incorreta!";
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            currentAdmin = found;
+            localStorage.setItem('ladolcevita_logged_admin', JSON.stringify(found));
+            closeAdminLoginModal();
+            updateAdminUI();
+            showToast(`Bem-vindo(a), ${found.name || found.email}! Painel de edição liberado.`);
+        }
+
+        function logoutAdmin() {
+            currentAdmin = null;
+            editMode = false;
+            localStorage.removeItem('ladolcevita_logged_admin');
+            updateAdminUI();
+            showToast("Você saiu do Modo Administrador. Agora está vendo o site como Cliente!");
+        }
+
+        // Gerenciador de E-mails de Administradores
+        function openAdminsModal() {
+            if (!isAdmin()) return openAdminLoginModal();
+            renderAdminsList();
+            const m = document.getElementById('adminsManagerModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function renderAdminsList() {
+            const container = document.getElementById('adminsListContainer');
+            container.innerHTML = (storeData.admins || []).map((adm, idx) => `
+                <div class="flex items-center justify-between bg-white p-3 rounded-2xl border border-[#e6d5c3]">
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold text-[#4a332d] truncate">${adm.name || 'Administrador'}</p>
+                        <p class="text-xs text-[#d96b70] font-mono truncate">${adm.email}</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <span class="text-[10px] bg-[#f4e8dc] px-2 py-0.5 rounded font-mono text-[#6e5046]">Senha: ${adm.password}</span>
+                        ${storeData.admins.length > 1 ? `
+                            <button onclick="removeAdminEmail(${idx})" class="w-7 h-7 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 text-xs flex items-center justify-center" title="Remover acesso">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addNewAdminEmail(e) {
+            e.preventDefault();
+            const name = document.getElementById('newAdminName').value.trim();
+            const email = document.getElementById('newAdminEmail').value.trim().toLowerCase();
+            const password = document.getElementById('newAdminPass').value.trim();
+
+            if (!email || !password) return;
+            const exists = storeData.admins.some(a => a.email.toLowerCase() === email);
+            if (exists) {
+                return showToast("Este e-mail já está cadastrado como administrador!");
+            }
+
+            storeData.admins.push({ name, email, password });
+            document.getElementById('newAdminName').value = '';
+            document.getElementById('newAdminEmail').value = '';
+            document.getElementById('newAdminPass').value = '';
+            renderAdminsList();
+            persistData(`E-mail ${email} autorizado como Administrador!`);
+        }
+
+        function removeAdminEmail(index) {
+            if (storeData.admins.length <= 1) {
+                return showToast("É necessário manter pelo menos 1 e-mail administrador!");
+            }
+            const removed = storeData.admins.splice(index, 1)[0];
+            renderAdminsList();
+            persistData(`Acesso de ${removed.email} removido.`);
+        }
+
+        let lastKnownTimestamp = 0;
+        let isSavingData = false;
+        const localChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('ladolcevita_live_sync') : null;
+
+        function syncCartWithUpdatedProducts() {
+            if (!cart || cart.length === 0) return;
+            cart.forEach(item => {
+                const updatedProd = (storeData.products || []).find(p => p.id === item.id);
+                if (updatedProd) {
+                    item.name = updatedProd.name;
+                    item.price = updatedProd.promoPrice || updatedProd.price;
+                    item.image = updatedProd.image;
+                }
+            });
+        }
+
+        async function publishAndBroadcastNow() {
+            if (!isAdmin()) return openAdminLoginModal();
+            const btn = document.getElementById('btnPublishSite');
+            const lbl = document.getElementById('lblPublishSite');
+            const origText = lbl ? lbl.textContent : 'Atualizar Site dos Clientes';
+            if (lbl) lbl.textContent = 'Enviando...';
+            if (btn) btn.disabled = true;
+
+            showToast("🚀 Enviando novos produtos para a Nuvem...");
+            try {
+                storeData.updatedAt = Date.now();
+                lastKnownTimestamp = storeData.updatedAt;
+                localStorage.setItem('ladolcevita_backup', JSON.stringify(storeData));
+                localStorage.setItem('ladolcevita_last_update', String(storeData.updatedAt));
+
+                try {
+                    await fetch('/api/data', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(storeData)
+                    });
+                } catch (e) {}
+
+                const cloudSuccess = await pushCloudStoreData(storeData);
+                if (localChannel) {
+                    try { localChannel.postMessage(storeData); } catch (e) {}
+                }
+
+                if (cloudSuccess) {
+                    showToast("✅ Sucesso! Cardápio atualizado na Nuvem para todos os clientes!");
+                } else {
+                    showToast("Cardápio salvo! Atualizado para seus clientes.");
+                }
+            } catch (err) {
+                showToast("Cardápio salvo localmente!");
+            } finally {
+                if (lbl) lbl.textContent = origText;
+                if (btn) btn.disabled = false;
+            }
+        }
+
+        async function manualClientSync() {
+            const icon = document.getElementById('iconClientSync');
+            if (icon) icon.classList.add('fa-spin');
+            showToast("Buscando novos doces do cardápio...");
+            try {
+                await fetchFreshFromServer(true, true);
+            } finally {
+                setTimeout(() => {
+                    if (icon) icon.classList.remove('fa-spin');
+                }, 1000);
+            }
+        }
+
+        async function fetchFreshFromServer(showNotice = true, forceCloud = false) {
+            if (isSavingData) return;
+            let loadedFromApi = false;
+            try {
+                const res = await fetch('/api/data?t=' + Date.now(), { cache: 'no-store' });
+                if (res.ok) {
+                    const fresh = await res.json();
+                    if (isSavingData) return;
+                    if (fresh && Array.isArray(fresh.products) && fresh.products.length > 0) {
+                        loadedFromApi = true;
+                        if (forceCloud || (fresh.updatedAt && fresh.updatedAt > lastKnownTimestamp)) {
+                            applyIncomingStoreData(fresh, showNotice);
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            if (!loadedFromApi && !isSavingData) {
+                const cloudData = await fetchCloudStoreData(forceCloud);
+                if (!isSavingData && cloudData && Array.isArray(cloudData.products) && cloudData.products.length > 0) {
+                    if (forceCloud || !lastKnownTimestamp || (cloudData.updatedAt && cloudData.updatedAt > lastKnownTimestamp)) {
+                        applyIncomingStoreData(cloudData, showNotice);
+                    }
+                }
+            }
+        }
+
+        function applyIncomingStoreData(incoming, showLiveNotice = false) {
+            if (isSavingData) return;
+            if (!incoming || !Array.isArray(incoming.products) || incoming.products.length === 0) return;
+            if (incoming.updatedAt && incoming.updatedAt <= lastKnownTimestamp) return;
+            if (incoming.updatedAt) lastKnownTimestamp = incoming.updatedAt;
+
+            storeData = incoming;
+            ensureAdminAccounts();
+            try {
+                localStorage.setItem('ladolcevita_backup', JSON.stringify(storeData));
+            } catch (e) {}
+            syncCartWithUpdatedProducts();
+
+            const activeTag = document.activeElement ? document.activeElement.tagName : '';
+            if (!editMode || (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA')) {
+                renderAll();
+            }
+            if (showLiveNotice && !isAdmin()) {
+                showToast("Cardápio atualizado com novos doces!");
+            }
+        }
+
+        function initRealtimeSync() {
+            if ('EventSource' in window) {
+                try {
+                    const evtSource = new EventSource('/api/events');
+                    evtSource.onmessage = (event) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            if (data.version && data.version > lastKnownTimestamp) {
+                                fetchFreshFromServer(true);
+                            }
+                        } catch (e) {}
+                    };
+                    evtSource.onerror = () => {
+                        evtSource.close();
+                    };
+                } catch (e) {}
+            }
+
+            if (localChannel) {
+                localChannel.onmessage = (event) => {
+                    if (event.data && event.data.products) {
+                        applyIncomingStoreData(event.data, true);
+                    } else {
+                        fetchFreshFromServer(true);
+                    }
+                };
+            }
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'ladolcevita_last_update') {
+                    fetchFreshFromServer(true);
+                }
+            });
+
+            setInterval(() => {
+                fetchFreshFromServer(false);
+            }, 6000);
+        }
+
+        async function persistData(toastMessage = "Alterações salvas permanentemente!") {
+            isSavingData = true;
+            storeData.updatedAt = Date.now();
+            lastKnownTimestamp = storeData.updatedAt;
+
+            syncCartWithUpdatedProducts();
+            renderAll();
+
+            try {
+                localStorage.setItem('ladolcevita_backup', JSON.stringify(storeData));
+                localStorage.setItem('ladolcevita_last_update', String(storeData.updatedAt));
+            } catch (e) {}
+
+            try {
+                const res = await fetch('/api/data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(storeData)
+                });
+                if (res.ok) {
+                    const savedInfo = await res.json();
+                    if (savedInfo.updatedAt) {
+                        lastKnownTimestamp = savedInfo.updatedAt;
+                        storeData.updatedAt = savedInfo.updatedAt;
+                    }
+                }
+            } catch (e) {}
+
+            // Sincroniza na nuvem para funcionar no link do Netlify em qualquer outro email/celular
+            pushCloudStoreData(storeData).catch(() => {});
+
+            if (localChannel) {
+                try { localChannel.postMessage(storeData); } catch (e) { localChannel.postMessage({ updated: true }); }
+            }
+
+            setTimeout(() => { isSavingData = false; }, 1200);
+            if (toastMessage) showToast(toastMessage);
+        }
+
+        function renderAll() {
+            const s = storeData.settings || {};
+            document.getElementById('storeNameDisplay').textContent = s.storeName || 'La Dolce Vita';
+            document.getElementById('storeSubtitleDisplay').textContent = s.storeSubtitle || 'CONFEITARIA ARTESANAL';
+            document.getElementById('bannerTitleDisplay').textContent = s.bannerTitle || '';
+            document.getElementById('bannerDescDisplay').textContent = s.bannerDesc || '';
+            if (s.bannerImage) document.getElementById('bannerImageDisplay').src = s.bannerImage;
+            document.getElementById('footerAddress').textContent = s.address || '';
+            document.getElementById('footerHours').textContent = s.openingHours || '';
+            document.getElementById('footerInsta').textContent = s.instagram || '';
+            document.getElementById('footerDelivery').textContent = formatBRL(s.deliveryFee || 0);
+
+            const pill = document.getElementById('storeStatusPill');
+            if (s.isOpen !== false) {
+                pill.className = "px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1 shrink-0";
+                pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping"></span> Aberto`;
+            } else {
+                pill.className = "px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-red-100 text-red-800 border border-red-300 flex items-center gap-1 shrink-0";
+                pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> Fechado`;
+            }
+
+            renderCategories();
+            renderProducts();
+            renderCart();
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoryTabs');
+            const cats = storeData.categories || ["Todos"];
+            container.innerHTML = cats.map(cat => {
+                const active = cat === activeCategory;
+                return `<button onclick="selectCategory('${cat}')" class="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition shrink-0 ${active ? 'bg-[#d96b70] text-white shadow-md' : 'bg-white hover:bg-[#f7ebe0] text-[#5c423b] border border-[#e2d0be]'}">${cat}</button>`;
+            }).join('');
+
+            const select = document.getElementById('prodCategory');
+            if (select) {
+                select.innerHTML = cats.filter(c => c !== 'Todos').map(c => `<option value="${c}">${c}</option>`).join('');
+            }
+        }
+
+        function selectCategory(cat) {
+            activeCategory = cat;
+            renderCategories();
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const query = (currentSearch || '').toLowerCase();
+            const sort = document.getElementById('sortSelect').value;
+            const adminLogged = isAdmin();
+
+            let list = [...(storeData.products || [])];
+            if (activeCategory !== "Todos") {
+                list = list.filter(p => p.category === activeCategory);
+            }
+            if (query) {
+                list = list.filter(p =>
+                    (p.name || '').toLowerCase().includes(query) ||
+                    (p.description || '').toLowerCase().includes(query) ||
+                    (p.category || '').toLowerCase().includes(query)
+                );
+            }
+
+            if (sort === 'featured') list.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+            if (sort === 'priceAsc') list.sort((a, b) => (a.promoPrice || a.price) - (b.promoPrice || b.price));
+            if (sort === 'priceDesc') list.sort((a, b) => (b.promoPrice || b.price) - (a.promoPrice || a.price));
+            if (sort === 'nameAsc') list.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white rounded-3xl p-8 sm:p-12 text-center border border-[#e6d5c3]">
+                        <i class="fa-solid fa-cookie-bite text-4xl text-[#d96b70] mb-3"></i>
+                        <p class="font-serif-title text-xl sm:text-2xl font-bold text-[#4a332d]">Nenhum doce encontrado nesta busca</p>
+                    </div>`;
+                return;
+            }
+
+            grid.innerHTML = list.map(prod => {
+                const effectivePrice = prod.promoPrice ? prod.promoPrice : prod.price;
+                const isOut = !prod.available || prod.stock <= 0;
+
+                return `
+                <div class="bg-white rounded-3xl overflow-hidden border ${adminLogged && editMode ? 'border-2 border-[#d96b70] edit-pulse' : 'border-[#ece0d1]'} card-shadow flex flex-col justify-between transition duration-300 relative group">
+                    <div>
+                        <div class="relative aspect-[4/3] sm:h-52 sm:aspect-auto overflow-hidden bg-[#f7efe6] w-full">
+                            <img src="${prod.image}" onerror="this.src='/logo.jpg'" alt="${prod.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 ${isOut ? 'grayscale opacity-60' : ''}">
+                            
+                            ${prod.badge ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold bg-[#36231e]/90 text-[#fdf8f2] backdrop-blur-xs shadow">${prod.badge}</span>` : ''}
+                            
+                            ${adminLogged ? `
+                                <span class="absolute bottom-2 left-3 px-2 py-0.5 rounded bg-black/60 text-white text-[10px] font-mono">#${prod.id}</span>
+                                <div class="absolute top-3 right-3 flex gap-1.5">
+                                    <button onclick="openEditProductModal(${prod.id})" class="px-2.5 py-1.5 rounded-full bg-white/95 hover:bg-[#d96b70] text-[#4a332d] hover:text-white text-[11px] sm:text-xs font-bold shadow-md transition flex items-center gap-1" title="Editar Foto, Nome e Preço">
+                                        <i class="fa-solid fa-camera-rotate"></i> <span>Editar</span>
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="p-4 sm:p-5">
+                            <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-[#9c7a6b] font-semibold uppercase tracking-wider mb-1">
+                                <span class="truncate">${prod.category}</span>
+                                <span class="shrink-0">${prod.weight || ''}</span>
+                            </div>
+
+                            ${adminLogged && editMode ? `
+                                <div class="space-y-2 mt-2 pt-2 border-t border-dashed border-[#e2cbb5]">
+                                    <label class="text-[10px] font-bold uppercase text-[#d96b70]">Nome do Doce:</label>
+                                    <input type="text" value="${prod.name}" onchange="inlineUpdate(${prod.id}, 'name', this.value)" class="w-full px-2.5 py-1.5 rounded-lg bg-[#fdf8f2] border border-[#d96b70] text-xs font-bold text-[#4a332d]">
+                                    
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <label class="text-[10px] font-bold uppercase text-[#7c625a]">Valor (R$):</label>
+                                            <input type="number" step="0.01" value="${prod.price}" onchange="inlineUpdate(${prod.id}, 'price', parseFloat(this.value))" class="w-full px-2 py-1 rounded-lg bg-[#fdf8f2] border border-[#dcc5b0] text-xs font-bold">
+                                        </div>
+                                        <div>
+                                            <label class="text-[10px] font-bold uppercase text-[#d96b70]">Promo (R$):</label>
+                                            <input type="number" step="0.01" value="${prod.promoPrice || ''}" placeholder="Opcional" onchange="inlineUpdate(${prod.id}, 'promoPrice', this.value ? parseFloat(this.value) : null)" class="w-full px-2 py-1 rounded-lg bg-[#fdf8f2] border border-[#f2bac0] text-xs font-bold text-[#d96b70]">
+                                        </div>
+                                    </div>
+                                    <button onclick="openEditProductModal(${prod.id})" class="w-full py-2 rounded-lg bg-[#4a332d] text-white text-[11px] font-bold flex items-center justify-center gap-1 mt-1">
+                                        <i class="fa-solid fa-image"></i> Trocar Foto Errada
+                                    </button>
+                                </div>
+                            ` : `
+                                <h4 class="font-serif-title text-lg sm:text-xl font-bold text-[#4a332d] leading-snug line-clamp-2">${prod.name}</h4>
+                                <p class="text-xs text-[#7c625a] mt-1.5 line-clamp-2 sm:line-clamp-3 leading-relaxed">${prod.description || ''}</p>
+                            `}
+                        </div>
+                    </div>
+
+                    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-2.5 flex items-center justify-between border-t border-[#f5ece2]">
+                        <div>
+                            ${prod.promoPrice ? `<span class="text-[11px] text-[#a88b7d] line-through block">${formatBRL(prod.price)}</span>` : `<span class="text-[10px] sm:text-[11px] text-[#9c7a6b] block">Valor unitário</span>`}
+                            <span class="text-lg sm:text-xl font-extrabold text-[#4a332d]">${formatBRL(effectivePrice)}</span>
+                        </div>
+
+                        <div class="flex items-center gap-1.5">
+                            ${isOut ? `
+                                <span class="px-3 py-2 rounded-xl bg-stone-200 text-stone-600 text-xs font-bold">Esgotado</span>
+                            ` : `
+                                <button onclick="addToCart(${prod.id})" class="px-4 py-2.5 rounded-2xl bg-[#d96b70] hover:bg-[#bf565b] text-white text-xs font-bold shadow-xs transition flex items-center gap-1.5 active:scale-95">
+                                    <i class="fa-solid fa-plus"></i> Adicionar
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function toggleEditMode() {
+            if (!isAdmin()) return openAdminLoginModal();
+            editMode = !editMode;
+            const btn = document.getElementById('btnToggleEdit');
+            const lbl = document.getElementById('lblToggleEdit');
+            const banner = document.getElementById('directEditBanner');
+            if (editMode) {
+                lbl.textContent = "Sair da Edição";
+                btn.className = "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-400 hover:bg-emerald-300 text-stone-950 transition flex items-center gap-1.5 shrink-0 shadow";
+                banner.classList.remove('hidden');
+            } else {
+                lbl.textContent = "Edição Direta";
+                btn.className = "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-[#f59e0b] hover:bg-[#d97706] text-stone-950 transition flex items-center gap-1.5 shrink-0 shadow";
+                banner.classList.add('hidden');
+            }
+            renderProducts();
+        }
+
+        function inlineUpdate(id, field, value) {
+            if (!isAdmin()) return;
+            const p = storeData.products.find(x => x.id === id);
+            if (!p) return;
+            p[field] = value;
+            persistData(`Produto #${id} atualizado!`);
+        }
+
+        function renderGalleryPresets() {
+            const box = document.getElementById('quickPhotoPresets');
+            if (!box) return;
+            box.innerHTML = sweetGalleryPresets.map(item => `
+                <button type="button" onclick="selectPresetPhoto('${item.url}')" class="group relative rounded-xl overflow-hidden border-2 border-transparent hover:border-[#d96b70] focus:border-[#d96b70] h-14 bg-white shadow-xs" title="${item.label}">
+                    <img src="${item.url}" class="w-full h-full object-cover group-hover:scale-110 transition">
+                    <span class="absolute inset-x-0 bottom-0 bg-black/65 text-white text-[9px] truncate px-1 py-0.5">${item.label}</span>
+                </button>
+            `).join('');
+        }
+
+        function selectPresetPhoto(url) {
+            document.getElementById('prodImageUrl').value = url;
+            document.getElementById('prodImagePreview').src = url;
+        }
+
+        function useLogoAsProductImage() {
+            selectPresetPhoto('/logo.jpg');
+        }
+
+        function handleFileUpload(event, inputId, previewId) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_W = 800;
+                    const scale = img.width > MAX_W ? (MAX_W / img.width) : 1;
+                    canvas.width = Math.round(img.width * scale);
+                    canvas.height = Math.round(img.height * scale);
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.84);
+                    if (inputId) document.getElementById(inputId).value = compressedDataUrl;
+                    if (previewId) document.getElementById(previewId).src = compressedDataUrl;
+                    showToast("Foto otimizada e carregada! Clique em Salvar.");
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function openEditProductModal(id) {
+            if (!isAdmin()) return openAdminLoginModal();
+            const prod = storeData.products.find(p => p.id === id);
+            if (!prod) return;
+            renderCategories();
+            document.getElementById('modalTitle').textContent = `Editar: ${prod.name}`;
+            document.getElementById('prodId').value = prod.id;
+            document.getElementById('prodName').value = prod.name;
+            document.getElementById('prodCategory').value = prod.category;
+            document.getElementById('prodPrice').value = prod.price;
+            document.getElementById('prodPromoPrice').value = prod.promoPrice || '';
+            document.getElementById('prodWeight').value = prod.weight || '';
+            document.getElementById('prodStock').value = prod.stock ?? 15;
+            document.getElementById('prodBadge').value = prod.badge || '';
+            document.getElementById('prodAvailable').checked = prod.available !== false;
+            document.getElementById('prodFeatured').checked = !!prod.featured;
+            document.getElementById('prodDesc').value = prod.description || '';
+            document.getElementById('prodImageUrl').value = prod.image || '';
+            document.getElementById('prodImagePreview').src = prod.image || '/logo.jpg';
+            document.getElementById('btnDeleteProd').classList.remove('hidden');
+
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function openNewProductModal() {
+            if (!isAdmin()) return openAdminLoginModal();
+            renderCategories();
+            document.getElementById('modalTitle').textContent = "Cadastrar Novo Doce";
+            document.getElementById('prodId').value = '';
+            document.getElementById('prodName').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodPromoPrice').value = '';
+            document.getElementById('prodWeight').value = '120g';
+            document.getElementById('prodStock').value = 20;
+            document.getElementById('prodBadge').value = 'Novidade';
+            document.getElementById('prodAvailable').checked = true;
+            document.getElementById('prodFeatured').checked = true;
+            document.getElementById('prodDesc').value = '';
+            const defaultImg = sweetGalleryPresets[0].url;
+            document.getElementById('prodImageUrl').value = defaultImg;
+            document.getElementById('prodImagePreview').src = defaultImg;
+            document.getElementById('btnDeleteProd').classList.add('hidden');
+
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveProductForm(e) {
+            e.preventDefault();
+            if (!isAdmin()) return;
+            const idVal = document.getElementById('prodId').value;
+            const payload = {
+                id: idVal ? parseInt(idVal) : (storeData.products.reduce((m, x) => Math.max(m, x.id), 0) + 1),
+                name: document.getElementById('prodName').value.trim(),
+                category: document.getElementById('prodCategory').value,
+                price: parseFloat(document.getElementById('prodPrice').value) || 0,
+                promoPrice: document.getElementById('prodPromoPrice').value ? parseFloat(document.getElementById('prodPromoPrice').value) : null,
+                weight: document.getElementById('prodWeight').value.trim(),
+                stock: parseInt(document.getElementById('prodStock').value) || 0,
+                badge: document.getElementById('prodBadge').value.trim(),
+                available: document.getElementById('prodAvailable').checked,
+                featured: document.getElementById('prodFeatured').checked,
+                description: document.getElementById('prodDesc').value.trim(),
+                image: document.getElementById('prodImageUrl').value.trim() || '/logo.jpg'
+            };
+
+            if (idVal) {
+                const idx = storeData.products.findIndex(p => p.id === parseInt(idVal));
+                if (idx > -1) storeData.products[idx] = payload;
+            } else {
+                storeData.products.unshift(payload);
+            }
+
+            closeProductModal();
+            persistData("Doce salvo com sucesso!");
+            pushCloudStoreData(storeData).then(ok => {
+                if (ok) showToast("✅ Doce sincronizado na Nuvem para todos os clientes!");
+            }).catch(() => {});
+        }
+
+        function deleteCurrentProduct() {
+            if (!isAdmin()) return;
+            const idVal = parseInt(document.getElementById('prodId').value);
+            if (!idVal) return;
+            storeData.products = storeData.products.filter(p => p.id !== idVal);
+            closeProductModal();
+            persistData("Produto removido do cardápio.");
+            pushCloudStoreData(storeData).catch(() => {});
+        }
+
+        function openStoreSettingsModal() {
+            if (!isAdmin()) return openAdminLoginModal();
+            const s = storeData.settings || {};
+            document.getElementById('setStoreName').value = s.storeName || '';
+            document.getElementById('setStoreSub').value = s.storeSubtitle || '';
+            document.getElementById('setBannerTitle').value = s.bannerTitle || '';
+            document.getElementById('setBannerDesc').value = s.bannerDesc || '';
+            document.getElementById('setBannerImage').value = s.bannerImage || '';
+            document.getElementById('setWhatsapp').value = s.whatsapp || '5581989936203';
+            document.getElementById('setDeliveryFee').value = s.deliveryFee ?? 8.50;
+            document.getElementById('setAddress').value = s.address || '';
+            document.getElementById('setHours').value = s.openingHours || '';
+            document.getElementById('setIsOpen').checked = s.isOpen !== false;
+
+            const m = document.getElementById('storeSettingsModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function closeStoreSettingsModal() {
+            const m = document.getElementById('storeSettingsModal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        }
+
+        function saveStoreSettings(e) {
+            e.preventDefault();
+            if (!isAdmin()) return;
+            storeData.settings = {
+                ...storeData.settings,
+                storeName: document.getElementById('setStoreName').value.trim(),
+                storeSubtitle: document.getElementById('setStoreSub').value.trim(),
+                bannerTitle: document.getElementById('setBannerTitle').value.trim(),
+                bannerDesc: document.getElementById('setBannerDesc').value.trim(),
+                bannerImage: document.getElementById('setBannerImage').value.trim(),
+                whatsapp: document.getElementById('setWhatsapp').value.trim() || '5581989936203',
+                deliveryFee: parseFloat(document.getElementById('setDeliveryFee').value) || 0,
+                address: document.getElementById('setAddress').value.trim(),
+                openingHours: document.getElementById('setHours').value.trim(),
+                isOpen: document.getElementById('setIsOpen').checked
+            };
+            closeStoreSettingsModal();
+            persistData("Configurações da confeitaria atualizadas!");
+        }
+
+        function openBulkModal() {
+            if (!isAdmin()) return openAdminLoginModal();
+            const m = document.getElementById('bulkModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function applyBulkPercentage(pct) {
+            if (!isAdmin()) return;
+            const factor = 1 + (pct / 100);
+            storeData.products.forEach(p => {
+                p.price = Math.round(p.price * factor * 100) / 100;
+                if (p.promoPrice) p.promoPrice = Math.round(p.promoPrice * factor * 100) / 100;
+            });
+            document.getElementById('bulkModal').classList.add('hidden');
+            persistData(`Preços ajustados em ${pct > 0 ? '+' : ''}${pct}%!`);
+        }
+
+        function clearAllPromos() {
+            if (!isAdmin()) return;
+            storeData.products.forEach(p => p.promoPrice = null);
+            document.getElementById('bulkModal').classList.add('hidden');
+            persistData("Preços promocionais removidos.");
+        }
+
+        function enableAllStock() {
+            if (!isAdmin()) return;
+            storeData.products.forEach(p => { p.available = true; if (p.stock <= 0) p.stock = 15; });
+            document.getElementById('bulkModal').classList.add('hidden');
+            persistData("Todos os doces disponíveis em estoque!");
+        }
+
+        function openCommandTerminal() {
+            if (!isAdmin()) return openAdminLoginModal();
+            const m = document.getElementById('commandModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+            document.getElementById('cmdInput').focus();
+        }
+
+        function runQuickCommand(e) {
+            e.preventDefault();
+            if (!isAdmin()) return;
+            const raw = document.getElementById('cmdInput').value.trim();
+            const fb = document.getElementById('cmdFeedback');
+            if (!raw) return;
+
+            const parts = raw.split(' ');
+            const cmd = parts[0].toLowerCase();
+
+            if (cmd === '/preco' && parts.length >= 3) {
+                const id = parseInt(parts[1]);
+                const val = parseFloat(parts[2].replace(',', '.'));
+                const p = storeData.products.find(x => x.id === id);
+                if (p && !isNaN(val)) {
+                    p.price = val;
+                    p.promoPrice = null;
+                    persistData(`Preço do produto #${id} alterado para ${formatBRL(val)}`);
+                    fb.textContent = `✓ Sucesso: ${p.name} agora custa ${formatBRL(val)}`;
+                } else fb.textContent = `✗ Produto #${id} não encontrado ou valor inválido.`;
+            } else if (cmd === '/nome' && parts.length >= 3) {
+                const id = parseInt(parts[1]);
+                const newName = parts.slice(2).join(' ');
+                const p = storeData.products.find(x => x.id === id);
+                if (p) {
+                    p.name = newName;
+                    persistData(`Nome do produto #${id} atualizado!`);
+                    fb.textContent = `✓ Nome atualizado para "${newName}"`;
+                } else fb.textContent = `✗ Produto #${id} não encontrado.`;
+            } else if (cmd === '/foto' && parts.length >= 3) {
+                const id = parseInt(parts[1]);
+                const url = parts.slice(2).join(' ');
+                const p = storeData.products.find(x => x.id === id);
+                if (p) {
+                    p.image = url;
+                    persistData(`Foto do produto #${id} atualizada!`);
+                    fb.textContent = `✓ Foto atualizada com sucesso!`;
+                } else fb.textContent = `✗ Produto #${id} não encontrado.`;
+            } else if (cmd === '/desconto' && parts.length >= 2) {
+                const pct = parseFloat(parts[1]);
+                if (!isNaN(pct)) {
+                    applyBulkPercentage(-Math.abs(pct));
+                    fb.textContent = `✓ Desconto de ${pct}% aplicado em toda a loja!`;
+                }
+            } else if (cmd === '/esgotar' && parts.length >= 2) {
+                const id = parseInt(parts[1]);
+                const p = storeData.products.find(x => x.id === id);
+                if (p) {
+                    p.available = false;
+                    persistData(`Produto #${id} marcado como esgotado.`);
+                    fb.textContent = `✓ ${p.name} marcado como esgotado.`;
+                }
+            } else {
+                fb.textContent = "Comando não reconhecido. Use /preco, /nome, /foto, /desconto ou /esgotar.";
+            }
+            document.getElementById('cmdInput').value = '';
+        }
+
+        function openCategoryManager() {
+            if (!isAdmin()) return openAdminLoginModal();
+            renderCategoryManagerList();
+            const m = document.getElementById('categoryModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function renderCategoryManagerList() {
+            const box = document.getElementById('categoryListManager');
+            box.innerHTML = storeData.categories.filter(c => c !== 'Todos').map(c => `
+                <div class="flex items-center justify-between bg-[#f7efe6] px-3.5 py-2 rounded-xl text-sm font-semibold">
+                    <span>${c}</span>
+                    <button onclick="removeCategory('${c}')" class="text-red-600 hover:text-red-800 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addCategory(e) {
+            e.preventDefault();
+            if (!isAdmin()) return;
+            const val = document.getElementById('newCatInput').value.trim();
+            if (val && !storeData.categories.includes(val)) {
+                storeData.categories.push(val);
+                document.getElementById('newCatInput').value = '';
+                renderCategoryManagerList();
+                persistData("Nova categoria adicionada!");
+            }
+        }
+
+        function removeCategory(cat) {
+            if (!isAdmin()) return;
+            storeData.categories = storeData.categories.filter(c => c !== cat);
+            if (activeCategory === cat) activeCategory = "Todos";
+            renderCategoryManagerList();
+            persistData("Categoria removida.");
+        }
+
+        async function resetToDefault() {
+            if (!isAdmin()) return;
+            if (!confirm("Deseja restaurar todos os doces e configurações originais de fábrica?")) return;
+            try {
+                const res = await fetch('/api/reset', { method: 'POST' });
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json && json.data) storeData = json.data;
+                } else {
+                    storeData = JSON.parse(JSON.stringify(BUILTIN_STORE_DATA));
+                }
+            } catch (e) {
+                storeData = JSON.parse(JSON.stringify(BUILTIN_STORE_DATA));
+            }
+            ensureAdminAccounts();
+            await persistData("Cardápio original restaurado!");
+        }
+
+        function addToCart(id) {
+            const prod = storeData.products.find(p => p.id === id);
+            if (!prod) return;
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id: prod.id, name: prod.name, price: prod.promoPrice || prod.price, image: prod.image, qty: 1 });
+            }
+            renderCart();
+            showToast(`${prod.name} adicionado à cesta!`);
+        }
+
+        function changeCartQty(id, delta) {
+            const idx = cart.findIndex(i => i.id === id);
+            if (idx === -1) return;
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            renderCart();
+        }
+
+        function toggleCartDrawer(open) {
+            const d = document.getElementById('cartDrawer');
+            if (open) { d.classList.remove('hidden'); d.classList.add('flex'); }
+            else { d.classList.add('hidden'); d.classList.remove('flex'); }
+        }
+
+        function renderCart() {
+            const count = cart.reduce((acc, i) => acc + i.qty, 0);
+            document.getElementById('cartCountBadge').textContent = count;
+
+            const sub = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const fee = cart.length > 0 ? (storeData.settings.deliveryFee ?? 8.50) : 0;
+            const total = sub + fee;
+
+            const mobileBar = document.getElementById('mobileCartBar');
+            if (mobileBar) {
+                if (count > 0) {
+                    mobileBar.classList.remove('hidden');
+                    document.getElementById('mobileBarCount').textContent = count;
+                    document.getElementById('mobileBarTotal').textContent = formatBRL(total);
+                } else {
+                    mobileBar.classList.add('hidden');
+                }
+            }
+
+            const list = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="text-center py-12 text-[#9c7a6b]"><i class="fa-solid fa-cookie text-4xl mb-2 opacity-50"></i><p class="text-sm">Sua cesta está vazia. Escolha seus doces favoritos!</p></div>`;
+            } else {
+                list.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-2xl border border-[#ece0d1]">
+                        <img src="${item.image}" onerror="this.src='/logo.jpg'" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs font-bold text-[#4a332d] truncate">${item.name}</p>
+                            <p class="text-xs text-[#d96b70] font-bold">${formatBRL(item.price)}</p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="changeCartQty(${item.id}, -1)" class="w-7 h-7 rounded-full bg-[#f4e8dc] text-xs font-bold">-</button>
+                            <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                            <button onclick="changeCartQty(${item.id}, 1)" class="w-7 h-7 rounded-full bg-[#d96b70] text-white text-xs font-bold">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('cartSubtotal').textContent = formatBRL(sub);
+            document.getElementById('cartDelivery').textContent = formatBRL(fee);
+            document.getElementById('cartTotal').textContent = formatBRL(total);
+        }
+
+        function selectPaymentMethod(method, btnElement) {
+            document.getElementById('selectedPaymentMethod').value = method;
+            const allBtns = document.querySelectorAll('#paymentMethodButtons .pay-btn');
+            allBtns.forEach(btn => {
+                btn.className = "pay-btn px-2.5 py-2 rounded-xl border border-[#dcc5b0] bg-white text-[#4a332d] text-xs font-semibold flex items-center justify-center gap-1.5 transition hover:bg-[#fcf3ea]";
+            });
+            if (btnElement) {
+                btnElement.className = "pay-btn active-pay px-2.5 py-2 rounded-xl border border-[#d96b70] bg-[#d96b70] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-xs";
+            }
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return showToast("Adicione pelo menos 1 doce na cesta!");
+            const name = document.getElementById('customerName').value.trim() || "Cliente";
+            const addr = document.getElementById('customerAddress').value.trim() || "A combinar";
+            const payment = document.getElementById('selectedPaymentMethod') ? document.getElementById('selectedPaymentMethod').value : "PIX";
+            const sub = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const fee = storeData.settings.deliveryFee ?? 8.50;
+
+            let msg = `🧁 *NOVO PEDIDO - ${storeData.settings.storeName || 'La Dolce Vita'}*\n\n`;
+            msg += `*Cliente:* ${name}\n*Endereço:* ${addr}\n*Forma de Pagamento:* ${payment}\n\n*Itens do Pedido:*\n`;
+            cart.forEach(i => {
+                msg += `• ${i.qty}x ${i.name} — ${formatBRL(i.price * i.qty)}\n`;
+            });
+            msg += `\n*Taxa de Entrega:* ${formatBRL(fee)}\n*TOTAL:* *${formatBRL(sub + fee)}*`;
+
+            let phone = (storeData.settings.whatsapp || '5581989936203').replace(/\D/g, '');
+            if (phone === '5511999999999' || !phone) phone = '5581989936203';
+            if (phone.length === 10 || phone.length === 11) phone = '55' + phone;
+            window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStoreData();
+            setTimeout(() => {
+                const splash = document.getElementById('splashLoader');
+                const mainWrap = document.getElementById('siteMainWrapper');
+                if (splash) splash.classList.add('splash-hidden');
+                if (mainWrap) mainWrap.classList.add('site-visible');
+            }, 2100);
+        });
+    </script>
+    </div>
+</body>
+</html>

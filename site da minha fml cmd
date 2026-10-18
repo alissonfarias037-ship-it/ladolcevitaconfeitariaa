@@ -1,0 +1,156 @@
+{
+  "settings": {
+    "storeName": "La Dolce Vita",
+    "storeSubtitle": "Confeitaria Artesanal",
+    "bannerTitle": "A doçura que encanta os seus melhores momentos",
+    "bannerDesc": "Doces finos, cupcakes artesanais, bolos decorados e tortas feitas com ingredientes selecionados e muito amor.",
+    "bannerImage": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=80",
+    "whatsapp": "5581989936203",
+    "instagram": "@ladolcevita.confeitaria",
+    "address": "Rua alto da bela vista, 70",
+    "openingHours": "Terça a Domingo: 10h às 20h",
+    "deliveryFee": 8.5,
+    "freeDeliveryAbove": 100,
+    "isOpen": true,
+    "accentColor": "#d96b70"
+  },
+  "categories": [
+    "Todos",
+    "Cupcakes",
+    "Bolos & Tortas",
+    "Doces Finos",
+    "Macarons & Cookies",
+    "Bebidas"
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Cupcake Amor Perfeito (Morango & Chantilly)",
+      "category": "Cupcakes",
+      "price": 14.9,
+      "promoPrice": 12.5,
+      "description": "Massa fofinha de baunilha com fava real, recheio cremoso de geleia artesanal de morango e cobertura de buttercream rosê com coração.",
+      "image": "https://images.unsplash.com/photo-1587668178277-295251f900ce?auto=format&fit=crop&w=700&q=80",
+      "badge": "Mais Vendido",
+      "available": true,
+      "featured": true,
+      "stock": 25,
+      "weight": "110g"
+    },
+    {
+      "id": 2,
+      "name": "Cupcake Red Velvet Imperial",
+      "category": "Cupcakes",
+      "price": 15.9,
+      "promoPrice": null,
+      "description": "O clássico veludo vermelho com leve toque de cacau, recheado e coberto com autêntico frosting de cream cheese philadelphia.",
+      "image": "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&fit=crop&w=700&q=80",
+      "badge": "Especial",
+      "available": true,
+      "featured": true,
+      "stock": 18,
+      "weight": "115g"
+    },
+    {
+      "id": 3,
+      "name": "Fatia de Bolo Chocolatudo Belga",
+      "category": "Bolos & Tortas",
+      "price": 24,
+      "promoPrice": 19.9,
+      "description": "Três camadas de massa úmida de cacau 70% intercaladas com brigadeiro gourmet de chocolate belga Callebaut e ganache meio amargo.",
+      "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80",
+      "badge": "Promoção",
+      "available": true,
+      "featured": true,
+      "stock": 12,
+      "weight": "220g"
+    },
+    {
+      "id": 4,
+      "name": "Caixa 6 Macarons Parisienses",
+      "category": "Macarons & Cookies",
+      "price": 42,
+      "promoPrice": null,
+      "description": "Seleção de macarons crocantes por fora e macios por dentro: Pistache, Framboesa, Baunilha, Caramelo Salgado, Limão Siciliano e Chocolate.",
+      "image": "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=700&q=80",
+      "badge": "Importado",
+      "available": true,
+      "featured": false,
+      "stock": 10,
+      "weight": "150g"
+    },
+    {
+      "id": 5,
+      "name": "Torta de Frutas Vermelhas & Creme Pâtissier",
+      "category": "Bolos & Tortas",
+      "price": 26.5,
+      "promoPrice": null,
+      "description": "Base crocante de pâte sucrée amanteigada, recheada com creme confeiteiro de baunilha e coroada com morangos, mirtilos e amoras frescas.",
+      "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=80",
+      "badge": "Fresco Hoje",
+      "available": true,
+      "featured": true,
+      "stock": 8,
+      "weight": "180g"
+    },
+    {
+      "id": 6,
+      "name": "Kit 12 Brigadeiros Gourmet Sortidos",
+      "category": "Doces Finos",
+      "price": 38.9,
+      "promoPrice": 34.9,
+      "description": "Brigadeiros feitos com leite condensado selecionado e chocolate nobre: Ao Leite, Ninho com Nutella, Pistache, Churros e Brûlée.",
+      "image": "https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=700&q=80",
+      "badge": "Presenteável",
+      "available": true,
+      "featured": false,
+      "stock": 30,
+      "weight": "240g"
+    },
+    {
+      "id": 7,
+      "name": "Cheesecake New York com Calda de Amora",
+      "category": "Bolos & Tortas",
+      "price": 25,
+      "promoPrice": null,
+      "description": "Cheesecake assado super cremoso sobre base de biscoito amanteigado, finalizado com compota rústica de amoras silvestres.",
+      "image": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=700&q=80",
+      "badge": "",
+      "available": true,
+      "featured": false,
+      "stock": 15,
+      "weight": "190g"
+    },
+    {
+      "id": 8,
+      "name": "Cookie New York Duplo Chocolate & Nozes",
+      "category": "Macarons & Cookies",
+      "price": 16,
+      "promoPrice": 13.5,
+      "description": "Cookie gigante de 130g estilo nova-iorquino, casquinha dourada e interior super macio derretendo gotas de chocolate meio amargo.",
+      "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=700&q=80",
+      "badge": "Quentinho",
+      "available": true,
+      "featured": false,
+      "stock": 20,
+      "weight": "130g"
+    }
+  ],
+  "admins": [
+    {
+      "name": "Mileyde Caroline",
+      "email": "mileydecarollayne17@gmail.com",
+      "password": "Mileyde2026"
+    },
+    {
+      "name": "Mileyde Caroline",
+      "email": "mileydecarollayne13@gmail.com",
+      "password": "Mileyde2026"
+    },
+    {
+      "name": "Alisson Silva",
+      "email": "alissonfarias037@gmail.com",
+      "password": "Alisson2026"
+    }
+  ]
+}
